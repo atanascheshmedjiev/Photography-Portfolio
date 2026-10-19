@@ -119,7 +119,7 @@ p { margin: 0 0 1em; }
    ========================================================================== */
 .hero { position: relative; height: 100vh; height: 100svh; min-height: 560px; color: var(--paper); overflow: hidden; }
 .hero picture, .hero .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; }
-.hero .hero-img { object-fit: cover; object-position: 50% 50%; }
+.hero .hero-img { object-fit: cover; object-position: var(--dpos, 50% 50%); }
 .hero::after { /* legibility scrim, darkest at the lower left where the words sit */
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(to top right, rgba(18,16,14,.82) 0%, rgba(18,16,14,.45) 35%, rgba(18,16,14,0) 62%);
@@ -421,3 +421,25 @@ html.lb-lock, html.lb-lock body { overflow: hidden; }
   body { background: #fff; color: #000; }
 }
 @media (min-width: 1000px) { .masonry { columns: 3; } }
+
+/* hero variant: subject on the left, words on the right; dark words over a bright sky on wide screens */
+.hero--right .hero-copy .wrap { align-items: flex-end; }
+@media (min-width: 901px) {
+  .hero--right::after { background: linear-gradient(to top left, rgba(18,16,14,.55) 0%, rgba(18,16,14,0) 30%); }
+  .hero--dark::before { display: none; }
+  .hero--dark .hero-text { color: var(--charcoal); }
+  .hero--dark .hero-text p { color: rgba(27, 26, 25, .82); }
+  .hero--dark .hero-text .btn { background: var(--charcoal); color: var(--paper); border-color: var(--charcoal); }
+  .hero--dark .hero-text .btn:hover { background: transparent; color: var(--charcoal); }
+  .hero-dark-page .site-head:not(.is-solid) { color: var(--charcoal); }
+  .hero-dark-page .site-head:not(.is-solid) .nav-cta { border-color: rgba(27,26,25,.35); }
+  .hero--dark .scroll-cue { color: rgba(27,26,25,.7); }
+}
+@media (max-width: 900px) {
+  .hero .hero-img { object-position: var(--mpos, 50% 50%); }
+  .hero--right .hero-copy .wrap { align-items: flex-start; }
+}
+@media (min-width: 901px) {
+  .hero--right .hero-copy { inset: 0; padding-top: 72px; }
+  .hero--right .hero-copy .wrap { height: 100%; justify-content: space-between; padding-top: clamp(2rem, 14vh, 9rem); }
+}
